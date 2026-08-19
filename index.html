@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anvilrow — Web &amp; App Development Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #F2EFE9; color: #131211; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    a { color: #C8410C; text-decoration: none; }
+    a:hover { color: #131211; }
+    input, textarea, button { font: inherit; color: inherit; }
+    ::selection { background: #C8410C; color: #F2EFE9; }
+
+    /* ── Header ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #F2EFE9;
+      border-bottom: 1px solid #131211;
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px clamp(20px, 4vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #131211;
+    }
+    .logo:hover { color: #131211; }
+    .logo-text {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 0.06em;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: clamp(16px, 2.4vw, 32px);
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+    nav a { color: #131211; }
+    nav a:hover { color: #C8410C; }
+    .nav-cta {
+      color: #C8410C !important;
+      border-bottom: 1px solid #C8410C;
+      padding-bottom: 1px;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { color: #131211 !important; border-bottom-color: #131211; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(56px, 9vw, 132px) clamp(20px, 4vw, 48px) clamp(48px, 6vw, 80px);
+    }
+    .hero-eyebrow {
+      margin-bottom: clamp(28px, 4vw, 44px);
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6E6960;
+    }
+    .hero h1 {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 9.4vw, 146px);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      max-width: 15ch;
+    }
+    .hero h1 .dot { color: #C8410C; }
+    .hero-bar {
+      height: 10px;
+      background: #C8410C;
+      margin: clamp(32px, 4vw, 52px) 0 clamp(24px, 3vw, 36px);
+      max-width: 560px;
+    }
+    .hero-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(24px, 4vw, 64px);
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .hero-body {
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.5;
+      max-width: 46ch;
+      color: #332F2A;
+    }
+    .btn-dark {
+      display: inline-block;
+      background: #131211;
+      color: #F2EFE9;
+      padding: 18px 34px;
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .btn-dark:hover { background: #C8410C; color: #F2EFE9; }
+
+    /* ── Shared section shell ── */
+    .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 48px);
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: clamp(32px, 4vw, 56px);
+    }
+    .section-h2 {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(30px, 4.4vw, 60px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .section-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6E6960;
+    }
+
+    /* ── Services ── */
+    #services { border-top: 1px solid #131211; }
+    .services-wrap { border-top: 1px solid #C7C0B4; }
+    .service-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: clamp(24px, 4vw, 56px);
+      padding: clamp(28px, 3.4vw, 44px) 0;
+      border-bottom: 1px solid #C7C0B4;
+      align-items: start;
+    }
+    .service-row:last-child { border-bottom-color: #131211; }
+    .service-hd {
+      display: flex;
+      gap: clamp(16px, 2vw, 28px);
+      align-items: baseline;
+    }
+    .service-num {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(28px, 3vw, 40px);
+      letter-spacing: -0.02em;
+      color: #C8410C;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .service-name {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(24px, 2.6vw, 36px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .service-desc { font-size: 16px; line-height: 1.6; color: #332F2A; max-width: 44ch; }
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 15px;
+      color: #332F2A;
+    }
+    .service-list li { border-top: 1px solid #DDD6C9; padding-top: 10px; }
+
+    /* ── Process (dark) ── */
+    #process {
+      border-top: 1px solid #131211;
+      background: #131211;
+      color: #F2EFE9;
+    }
+    #process .section-h2 { margin-bottom: clamp(32px, 4vw, 56px); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: clamp(24px, 3vw, 40px);
+    }
+    .step { border-top: 2px solid; padding-top: 18px; }
+    .step-1 { border-color: #C8410C; }
+    .step-2, .step-3, .step-4 { border-color: #4A453D; }
+    .step-lbl {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .step-1 .step-lbl { color: #C8410C; }
+    .step-2 .step-lbl, .step-3 .step-lbl, .step-4 .step-lbl { color: #8A8377; }
+    .step h3 {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .step p { font-size: 15px; line-height: 1.6; color: #B9B2A6; }
+
+    /* ── About ── */
+    .about-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 48px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(28px, 5vw, 72px);
+    }
+    .about-h2 {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(30px, 4.4vw, 60px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      max-width: 14ch;
+    }
+    .about-copy { display: flex; flex-direction: column; gap: 22px; max-width: 60ch; }
+    .about-copy p { font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; color: #332F2A; }
+
+    /* ── Team strip ── */
+    #team {
+      border-top: 1px solid #131211;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0;
+    }
+    .team-card {
+      padding: clamp(32px, 4vw, 56px) clamp(20px, 3vw, 40px);
+      border-right: 1px solid #C7C0B4;
+    }
+    .team-card:last-child { border-right: none; }
+    .team-card-num {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #C8410C;
+      text-transform: uppercase;
+      margin-bottom: clamp(20px, 3vw, 36px);
+    }
+    .team-card-role {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(20px, 2.2vw, 28px);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .team-card-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #6E6960;
+    }
+
+    /* ── Contact ── */
+    #contact { border-top: 1px solid #131211; }
+    .contact-h2 { margin-bottom: clamp(28px, 3vw, 44px); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+    }
+    .contact-lbl {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6E6960;
+      margin-bottom: 12px;
+    }
+    .email-big {
+      display: block;
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: clamp(24px, 3.4vw, 44px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #C8410C;
+      word-break: break-word;
+    }
+    .email-big:hover { color: #131211; }
+    .copy-btn {
+      display: block;
+      width: fit-content;
+      margin-top: 20px;
+      background: transparent;
+      border: 1px solid #131211;
+      padding: 11px 20px;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: #131211; color: #F2EFE9; }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 3vw, 32px);
+      margin-top: clamp(28px, 4vw, 44px);
+      border-top: 1px solid #C7C0B4;
+      padding-top: 18px;
+    }
+    .contact-detail-block .contact-lbl { margin-bottom: 6px; }
+    .contact-detail-block p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #332F2A;
+    }
+    .contact-detail-block a {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #332F2A;
+    }
+    .contact-detail-block a:hover { color: #C8410C; }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      border-top: 2px solid #131211;
+      padding-top: 26px;
+    }
+    .form-field { display: flex; flex-direction: column; gap: 8px; }
+    .form-field span {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6E6960;
+    }
+    .form-field input,
+    .form-field textarea {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid #131211;
+      padding: 10px 0;
+      font-size: 16px;
+      outline: none;
+      font-family: "IBM Plex Sans", Helvetica, sans-serif;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus { border-bottom-color: #C8410C; }
+    .form-field textarea { resize: vertical; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .btn-submit {
+      background: #131211;
+      color: #F2EFE9;
+      border: 0;
+      padding: 16px 32px;
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-submit:hover { background: #C8410C; }
+    .form-note { font-size: 14px; color: #C8410C; }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid #131211; }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(28px, 3vw, 40px) clamp(20px, 4vw, 48px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: #6E6960;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-text {
+      font-family: Archivo, Helvetica, sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      color: #131211;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: clamp(14px, 2vw, 28px); }
+    .footer-links a { color: #6E6960; }
+    .footer-links a:hover { color: #131211; }
+
+    /* ── Team card responsive border fix ── */
+    @media (max-width: 780px) {
+      .team-card { border-right: none; border-bottom: 1px solid #C7C0B4; }
+      .team-card:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true" style="display:block">
+        <rect x="0" y="2" width="24" height="5" fill="#C8410C"/>
+        <rect x="9" y="7" width="6" height="11" fill="#131211"/>
+        <rect x="3" y="18" width="18" height="4" fill="#131211"/>
+      </svg>
+      <span class="logo-text">ANVILROW</span>
+    </a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="top">
+  <div class="hero">
+    <p class="hero-eyebrow">Web &amp; app development studio · Kenya</p>
+    <h1>We build apps we own and apps you own<span class="dot">.</span></h1>
+    <div class="hero-bar"></div>
+    <div class="hero-bottom">
+      <p class="hero-body">Three people — data, design, and engineering — who split their time between launching products of their own and building products for others. In both cases, the standard is the same: data-informed, well-designed, and shipped.</p>
+      <a href="#contact" class="btn-dark">Start a project</a>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" data-fade>
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-h2">What we do</h2>
+      <p class="section-eyebrow">Two models, one standard</p>
+    </div>
+    <div class="services-wrap">
+
+      <div class="service-row">
+        <div class="service-hd">
+          <span class="service-num">01</span>
+          <h3 class="service-name">Our Own Products</h3>
+        </div>
+        <p class="service-desc">We conceive, design, and ship software products we own and operate. When we build for ourselves we have skin in the game — which means every decision is real, every trade-off is ours to live with, and nothing gets shipped we would not pay to use.</p>
+        <ul class="service-list">
+          <li>Data-validated product decisions</li>
+          <li>End-to-end design and engineering</li>
+          <li>Launch, growth, and iteration</li>
+          <li>Long-term operation and ownership</li>
+        </ul>
+      </div>
+
+      <div class="service-row">
+        <div class="service-hd">
+          <span class="service-num">02</span>
+          <h3 class="service-name">Your Project</h3>
+        </div>
+        <p class="service-desc">We take on a small number of client builds each year and treat them exactly like our own — fixed scope, fixed price, and the same team from first commit to launch day. Web apps, mobile apps, and the tools that hold operations together.</p>
+        <ul class="service-list">
+          <li>Web applications and dashboards</li>
+          <li>iOS and Android mobile apps</li>
+          <li>Internal tools and automations</li>
+          <li>Store submissions and deployment</li>
+        </ul>
+      </div>
+
+      <div class="service-row">
+        <div class="service-hd">
+          <span class="service-num">03</span>
+          <h3 class="service-name">Ongoing Support &amp; Maintenance</h3>
+        </div>
+        <p class="service-desc">A monthly retainer for software that is already live. We know the codebase, we respond to incidents, and we ship improvements without you having to re-explain the context every time something needs to change.</p>
+        <ul class="service-list">
+          <li>Monitoring and on-call response</li>
+          <li>Security and dependency updates</li>
+          <li>Performance and cost tuning</li>
+          <li>A named engineer who knows your stack</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- How the work runs -->
+<section id="process" data-fade>
+  <div class="section-inner">
+    <h2 class="section-h2">How client projects run</h2>
+    <div class="steps">
+      <div class="step step-1">
+        <p class="step-lbl">STEP 01</p>
+        <h3>Conversation</h3>
+        <p>An hour with the people who will build it. We say plainly whether we are the right studio for the job, and we mean it either way.</p>
+      </div>
+      <div class="step step-2">
+        <p class="step-lbl">STEP 02</p>
+        <h3>Shape</h3>
+        <p>We scope the work, map the critical paths, and put a fixed price and a real date on the first release. No ambiguity to hide behind later.</p>
+      </div>
+      <div class="step step-3">
+        <p class="step-lbl">STEP 03</p>
+        <h3>Build</h3>
+        <p>Weekly releases to a staging URL you can use. You talk directly to the people writing the code — no account managers in the way.</p>
+      </div>
+      <div class="step step-4">
+        <p class="step-lbl">STEP 04</p>
+        <h3>Launch &amp; hold</h3>
+        <p>We ship, hand over the keys and the documentation, and stay on call for as long as you want us to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" data-fade>
+  <div class="about-inner">
+    <h2 class="about-h2">Three people, one workshop</h2>
+    <div class="about-copy">
+      <p>Anvilrow is a private limited company registered in Kenya in August 2026. Three of us started it because we kept seeing the same pattern: good ideas left unbuilt for want of a team that could handle data, design, and engineering without the handoffs.</p>
+      <p>We split our time between products we own and projects we take on for others. The split keeps us honest — when we advise a client on a technical decision, we are making the same kind of decisions on our own products that same week. Nothing gets theoretical.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section id="team" data-fade>
+  <div class="section-inner" style="padding-bottom:0">
+    <div class="section-header" style="margin-bottom:0">
+      <h2 class="section-h2">The three</h2>
+      <p class="section-eyebrow">What each person owns</p>
+    </div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <p class="team-card-num">01 — Data</p>
+      <h3 class="team-card-role">Numbers before opinions</h3>
+      <p class="team-card-desc">Market sizing, user research, product analytics, and the quantitative work that keeps us from building things nobody wants. Every product decision at Anvilrow — ours or a client's — starts here.</p>
+    </div>
+    <div class="team-card">
+      <p class="team-card-num">02 — Design</p>
+      <h3 class="team-card-role">Interfaces people understand</h3>
+      <p class="team-card-desc">Product design, UI systems, and the visual language that makes software feel considered. Designed close to the engineering so nothing beautiful becomes impossible to build.</p>
+    </div>
+    <div class="team-card">
+      <p class="team-card-num">03 — Engineering</p>
+      <h3 class="team-card-role">Code that ships and holds</h3>
+      <p class="team-card-desc">Web and mobile development from architecture to deployment. The person you brief is the person who writes the code — no layers, no outsourcing, no surprises in the final review.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" data-fade>
+  <div class="section-inner">
+    <h2 class="section-h2 contact-h2">Start a project</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-lbl">Write to us</p>
+        <a href="mailto:studio@anvilrow.com" class="email-big">studio@anvilrow.com</a>
+        <button type="button" class="copy-btn" id="copyBtn">Copy address</button>
+        <div class="contact-details">
+          <div class="contact-detail-block">
+            <p class="contact-lbl">Phone</p>
+            <a href="tel:+254792971789">+254 792 971 789</a>
+          </div>
+          <div class="contact-detail-block">
+            <p class="contact-lbl">Where we are</p>
+            <p>Kenya<br>Working with clients remotely, anywhere.</p>
+          </div>
+          <div class="contact-detail-block">
+            <p class="contact-lbl">Response time</p>
+            <p>We reply to every message within one working day. If it is urgent, say so and we will respond the same day.</p>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-field">
+          <span>Name</span>
+          <input type="text" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-field">
+          <span>Email</span>
+          <input type="email" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-field">
+          <span>Is this a client project or a partnership enquiry?</span>
+          <input type="text" name="type" placeholder="e.g. Client project, collaboration, other">
+        </div>
+        <div class="form-field">
+          <span>Tell us what you are building</span>
+          <textarea name="project" rows="4" required placeholder="What is it, what problem does it solve, and when do you want to start?"></textarea>
+        </div>
+        <div class="form-row">
+          <button type="submit" class="btn-submit">Send enquiry</button>
+          <span class="form-note" id="formNote"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true" style="display:block">
+        <rect x="0" y="2" width="24" height="5" fill="#C8410C"/>
+        <rect x="9" y="7" width="6" height="11" fill="#131211"/>
+        <rect x="3" y="18" width="18" height="4" fill="#131211"/>
+      </svg>
+      <span class="footer-logo-text">ANVILROW</span>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:studio@anvilrow.com">studio@anvilrow.com</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p>© 2026 Anvilrow Limited</p>
+  </div>
+</footer>
+
+<script>
+  /* Scroll fade-in */
+  (function () {
+    var nodes = Array.from(document.querySelectorAll('[data-fade]'));
+    if (!nodes.length || !('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.08 });
+    nodes.forEach(function (n) {
+      if (n.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      n.style.transition = 'opacity 620ms ease, transform 620ms ease';
+      n.style.opacity = '0';
+      n.style.transform = 'translateY(14px)';
+      obs.observe(n);
+    });
+  })();
+
+  /* Copy email */
+  var copyBtn = document.getElementById('copyBtn');
+  var copyTimer;
+  copyBtn.addEventListener('click', function () {
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () { copyBtn.textContent = 'Copy address'; }, 2000);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText('studio@anvilrow.com').then(done, done);
+    else done();
+  });
+
+  /* Form */
+  var form = document.getElementById('contactForm');
+  var note = document.getElementById('formNote');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.reset();
+    note.textContent = 'Thanks — we reply within one working day.';
+  });
+</script>
+</body>
+</html>
