@@ -346,19 +346,41 @@
     .contact-details .contact-lbl { margin-bottom: 6px; }
     .contact-details p, .contact-details a { font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
     .contact-details a:hover { color: var(--ember); }
-    .contact-form { display: flex; flex-direction: column; gap: 24px; border-top: 2px solid var(--ink); padding-top: 28px; }
-    .field { display: flex; flex-direction: column; gap: 9px; }
-    .field span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ash); }
-    .field input, .field textarea {
-      background: transparent; border: 0; border-bottom: 1px solid var(--ink);
-      padding: 11px 0; font-family: var(--body); font-size: 18px; outline: none;
-      transition: border-color 240ms ease;
+    /* Project docket (replaces the form) */
+    .docket {
+      position: relative; overflow: hidden;
+      background: var(--dark); color: var(--paper);
+      padding: clamp(30px, 3.4vw, 50px);
+      border: 1px solid var(--ink);
+      display: flex; flex-direction: column; gap: clamp(24px, 3vw, 34px);
     }
-    .field input::placeholder, .field textarea::placeholder { color: #A49E93; }
-    .field input:focus, .field textarea:focus { border-bottom-color: var(--ember); }
-    .field textarea { resize: vertical; }
-    .form-row { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
-    .form-note { font-family: var(--mono); font-size: 13px; color: var(--ember); }
+    .docket-glow {
+      position: absolute; z-index: 0; pointer-events: none;
+      right: -20%; top: -30%; width: 70%; height: 70%;
+      background: radial-gradient(circle, rgba(200,65,12,0.32) 0%, transparent 62%);
+    }
+    .docket > * { position: relative; z-index: 1; }
+    .docket-top {
+      display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      padding-bottom: clamp(20px, 2.4vw, 28px); border-bottom: 1px solid #35302A;
+    }
+    .docket-tag { color: var(--ember); }
+    .docket-avail { display: inline-flex; align-items: center; gap: 9px; color: #B9B2A6; }
+    .docket-lead { font-size: clamp(19px, 1.7vw, 23px); line-height: 1.45; color: var(--paper); }
+    .docket-list { list-style: none; display: flex; flex-direction: column; }
+    .docket-list li {
+      display: flex; gap: clamp(16px, 2vw, 24px); align-items: baseline;
+      padding: clamp(16px, 1.8vw, 22px) 0; border-top: 1px solid #2A251F;
+    }
+    .docket-list li:first-child { border-top: 0; padding-top: 0; }
+    .docket-n { font-family: var(--disp); font-weight: 800; font-size: clamp(24px, 2.4vw, 34px); color: var(--ember); line-height: 0.8; flex-shrink: 0; }
+    .docket-list strong { display: block; font-family: var(--disp); font-weight: 700; text-transform: uppercase; font-size: clamp(18px, 1.7vw, 23px); letter-spacing: 0.005em; margin-bottom: 3px; }
+    .docket-list em { font-style: normal; font-size: 15px; color: #9B9488; line-height: 1.5; }
+    .btn-light { background: var(--paper); color: var(--ink); border-color: var(--paper); align-self: flex-start; }
+    .btn-light::before { background: var(--ember); }
+    .btn-light:hover { color: var(--paper); }
+    .docket-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: #7C766B; }
     @media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
 
     /* ── Footer ── */
@@ -599,28 +621,22 @@
           </div>
         </div>
       </div>
-      <form class="contact-form" id="contactForm" data-fade>
-        <div class="field">
-          <span>Name</span>
-          <input type="text" name="name" required placeholder="Your name">
+      <aside class="docket" data-fade>
+        <div class="docket-glow" aria-hidden="true"></div>
+        <div class="docket-top">
+          <span class="docket-tag">Project docket</span>
+          <span class="docket-avail"><span class="status-dot" aria-hidden="true"></span> Booking Q1 2027</span>
         </div>
-        <div class="field">
-          <span>Email</span>
-          <input type="email" name="email" required placeholder="you@company.com">
-        </div>
-        <div class="field">
-          <span>Client project or partnership?</span>
-          <input type="text" name="type" placeholder="e.g. Client project, collaboration, other">
-        </div>
-        <div class="field">
-          <span>Tell us what you are building</span>
-          <textarea name="project" rows="4" required placeholder="What is it, what problem does it solve, and when do you want to start?"></textarea>
-        </div>
-        <div class="form-row">
-          <button type="submit" class="btn"><span>Send enquiry</span><span class="arw" aria-hidden="true">→</span></button>
-          <span class="form-note" id="formNote"></span>
-        </div>
-      </form>
+        <p class="docket-lead">No form to fill in. Just tell us four things in a single email —<br>we take it from there.</p>
+        <ol class="docket-list">
+          <li><span class="docket-n">01</span><div><strong>What you're building</strong><em>The product, in a sentence or two.</em></div></li>
+          <li><span class="docket-n">02</span><div><strong>The problem it solves</strong><em>Who it's for and why it matters.</em></div></li>
+          <li><span class="docket-n">03</span><div><strong>Timeline</strong><em>When you'd like to start and launch.</em></div></li>
+          <li><span class="docket-n">04</span><div><strong>Rough budget</strong><em>A range is fine — it helps us shape scope.</em></div></li>
+        </ol>
+        <a href="mailto:studio@anvilrow.com?subject=New%20enquiry%20from%20anvilrow.com&amp;body=1.%20What%20you're%20building%3A%0A%0A2.%20The%20problem%20it%20solves%3A%0A%0A3.%20Timeline%3A%0A%0A4.%20Rough%20budget%3A%0A" class="btn btn-light"><span>Write the email</span><span class="arw" aria-hidden="true">→</span></a>
+        <p class="docket-foot">We read every message ourselves — no bots, no funnels.</p>
+      </aside>
     </div>
   </div>
 </section>
@@ -696,32 +712,6 @@
     else done();
   });
 
-  /* Form — compose the enquiry as an email to studio@anvilrow.com */
-  var form = document.getElementById('contactForm');
-  var note = document.getElementById('formNote');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var f = form.elements;
-    var name = (f.name.value || '').trim();
-    var email = (f.email.value || '').trim();
-    var type = (f.type.value || '').trim();
-    var project = (f.project.value || '').trim();
-
-    var subject = 'New enquiry — ' + (name || 'Anvilrow website');
-    var body =
-      'Name: ' + name + '\n' +
-      'Email: ' + email + '\n' +
-      'Type: ' + (type || '—') + '\n\n' +
-      'Project:\n' + project + '\n';
-
-    var mailto = 'mailto:studio@anvilrow.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
-    window.location.href = mailto;
-    note.textContent = 'Opening your email app — send the message to reach us.';
-    form.reset();
-  });
 </script>
 </body>
 </html>
